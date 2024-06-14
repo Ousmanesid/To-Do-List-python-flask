@@ -1,0 +1,15 @@
+import sqlite3
+def init_db():
+    with sqlite3.connect('taches.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("DROP TABLE IF EXISTS taches")
+        cursor.execute("""
+        CREATE TABLE taches (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titre TEXT NOT NULL,
+            description TEXT NOT NULL,
+            date TIMESTAMP DEFAULT (strftime('%Y-%m-%d %H:%M', 'now', 'localtime'))
+        )
+        """)
+        conn.commit()
+init_db()
